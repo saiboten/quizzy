@@ -11,7 +11,7 @@
 <img src="/images/champagne7.svg" />
 <p>Velkommen til bryllupsquiz!</p>
 <p>Lagnavn: ________________ </p>
-<ul>
+<ol>
     <li ng-repeat="questionBundle in questions">
         <span>{{questionBundle.question}}</span>
         <ol type="a" ng-show="questionBundle.alternatives">
@@ -22,6 +22,6 @@
         <p ng-show="questionBundle.alternatives.length == 0">Svar: _________________________</p>
 
     </li>
-</ul>
+</ol>
 </body>
 </html>

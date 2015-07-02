@@ -29,7 +29,7 @@
         <input type="submit" value="Legg til spørsmål" ng-click="add_question()" />
 
         <br/><br/>
-        <ul>
+        <ol>
             <li ng-repeat="questionBundle in questions">
                 <p>{{questionBundle.question}}</p>
                 <ol type="a">
@@ -40,7 +40,7 @@
                 <p>Svar: {{questionBundle.answer}}</p>
                 <button ng-click="remove_question(questionBundle.question)">Fjern spørsmål</button>
             </li>
-        </ul>
+        </ol>
     </div>
 </body>
 </html>
