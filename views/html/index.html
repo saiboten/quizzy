@@ -3,44 +3,14 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <style>
-        body {
-            font-size: 1.2em;
-        }
-        #wrapper {
-            width: 700px;
-            margin: 0 auto;
-            padding: 1em;
-            border: 1px solid black;
-        }
-
-    </style>
     <script src="/javascripts/angular.js"></script>
     <script src="/javascripts/controllers.js"></script>
 </head>
-<body ng-controller="QuestionCtrl">
-    <div id="wrapper">
-        <label for="question">Spørsmål: </label><textarea rows="5" cols="50" autocomplete="off" id="question" type="text" ng-model="question"></textarea><br />
-
-        <form ng-submit="add_alternative()"><label for="question">Alternativ: </label><input autocomplete="off" id="alternative" type="text" ng-model="alternative" /><input type="submit" value="Legg til alternativ" /></form><br/>
-        </p><ul><li ng-repeat="alternative in alternatives">{{alternative}}</li></ul><button ng-show="alternatives.length > 0" ng-click="clear_alternatives()">Slett alternativer</button><br /><br/>
-
-        <label for="answer">Svar: </label><input autocomplete="off" id="answer" type="text" ng-model="answer" />
-        <input type="submit" value="Legg til spørsmål" ng-click="add_question()" />
-
-        <br/><br/>
-        <ol>
-            <li ng-repeat="questionBundle in questions">
-                <p>{{questionBundle.question}}</p>
-                <ol type="a">
-                    <li ng-repeat="alternative in questionBundle.alternatives">
-                        <p>{{alternative}}</p>
-                    </li>
-                </ol>
-                <p>Svar: {{questionBundle.answer}}</p>
-                <button ng-click="remove_question(questionBundle.question)">Fjern spørsmål</button>
-            </li>
-        </ol>
-    </div>
+<body ng-controller="UsernameCtrl">
+<p>Select username</p><br />
+<form ng-submit="user_submitted()">
+<input ng-model="username" type="text" />
+<input type="submit" value="Velg" />
+</form>
 </body>
 </html>

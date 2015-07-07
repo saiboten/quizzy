@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="quizApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="/javascripts/angular.js"></script>
+    <script src="/javascripts/controllers.js"></script>
+</head>
+<body ng-controller="QuizNameCtrl">
+<p>Select quiz or create a new one!</p><br />
+<p ng-model="status"></p>
+<form ng-submit="add_quiz()">
+<input ng-model="quiz_name" type="text" />
+<input type="submit" value="Velg" />
+</form>
+
+<ul>
+    <li ng-repeat="quiz in quizzes">
+        <a href="/quizadmin/{{quiz.quiz}}">{{quiz.quiz}}</a>
+    </li>
+</ul>
+
+</body>
+</html>

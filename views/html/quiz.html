@@ -7,21 +7,27 @@
     <script src="/javascripts/controllers.js"></script>
 </head>
 <body ng-controller="QuestionCtrl">
+
 <h1>Bryllupsquiz!</h1>
 <img src="/images/champagne7.svg" />
 <p>Velkommen til bryllupsquiz!</p>
 <p>Lagnavn: ________________ </p>
-<ol>
-    <li ng-repeat="questionBundle in questions">
-        <span>{{questionBundle.question}}</span>
-        <ol type="a" ng-show="questionBundle.alternatives">
-            <li ng-repeat="alternative in questionBundle.alternatives">
-                <p>{{alternative}}</p>
+
+    <li ng-repeat="(category,value) in quiz.categories">
+        <h2>{{category}}</h2>
+        <ol>
+            <li ng-repeat="question in quiz.categories[category]">
+                <p>{{question.question}}</p>
+                <ol type="a" ng-show="question.alternatives != null">
+                    <li ng-repeat="alternative in question.alternatives">
+                        {{alternative}}
+                    </li>
+                </ol>
+                <p>Fasit: {{question.answer}}</p>
             </li>
         </ol>
-        <p ng-show="questionBundle.alternatives.length == 0">Svar: _________________________</p>
 
     </li>
-</ol>
+
 </body>
 </html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html ng-app="quizApp" class="yui3-js-enabled">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+
+    <script src="/javascripts/angular.js"></script>
+    <script src="/javascripts/controllers.js"></script>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+    <!--<![endif]-->
+
+</head>
+<body ng-controller="QuestionCtrl">
+
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a href="" class="pure-menu-heading">Your Site</a>
+
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-selected"><a class="pure-menu-link" href="#">Home</a></li>
+            <li class="pure-menu-item"><a class="pure-menu-link" href="#">Tour</a></li>
+            <li class="pure-menu-item"><a class="pure-menu-link" href="#">Sign Up</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="splash-container" id="yui_3_17_2_1_1436299755011_10">
+    <div class="splash">
+        <h1 class="splash-head">Big Bold Text</h1>
+        <p class="splash-subhead">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        </p>
+        <p>
+            <a class="pure-button pure-button-primary" href="http://purecss.io">Get Started</a>
+        </p>
+    </div>
+</div>
+
+<div class="content-wrapper">
+    <div class="content">
+
+
+
+        <h2 class="content-head is-center">Legg til kategorier</h2>
+
+        <div class="pure-g">
+            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+
+                <form ng-submit="add_category()">
+                    <input ng-model="category_name" type="text" />
+                    <input type="submit" value="Legg til kategori" />
+                </form>
+                <p><a href="/quiz/{{quiz.quiz}}">Se quiz</a></p>
+                <p ng-model="status"></p>
+
+                <h3 class="content-subhead">
+                    <i class="fa fa-rocket"></i>
+                    Get Started Quickly
+                </h3>
+                <p>
+                    Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
+                </p>
+            </div>
+            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+                <h3 class="content-subhead">
+                    <i class="fa fa-mobile"></i>
+                    Responsive Layouts
+                </h3>
+                <p>
+                    Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
+                </p>
+            </div>
+            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+                <h3 class="content-subhead">
+                    <i class="fa fa-th-large"></i>
+                    Modular
+                </h3>
+                <p>
+                    Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
+                </p>
+            </div>
+            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+                <h3 class="content-subhead">
+                    <i class="fa fa-check-square-o"></i>
+                    Plays Nice
+                </h3>
+                <p>
+                    Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="ribbon l-box-lrg pure-g">
+        <div class="l-box-lrg is-center pure-u-1 pure-u-md-1-2 pure-u-lg-2-5">
+            <img width="300" src="/img/common/file-icons.png" alt="File Icons" class="pure-img-responsive">
+        </div>
+        <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-3-5">
+
+            <h2 class="content-head content-head-ribbon">Laboris nisi ut aliquip.</h2>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor.
+            </p>
+        </div>
+    </div>
+
+    <div class="content">
+        <h2 class="content-head is-center">Dolore magna aliqua. Uis aute irure.</h2>
+
+        <div class="pure-g">
+            <div class="l-box-lrg pure-u-1 pure-u-md-2-5">
+                <form class="pure-form pure-form-stacked">
+                    <fieldset>
+
+                        <label for="name">Your Name</label>
+                        <input type="text" placeholder="Your Name" id="name">
+
+
+                        <label for="email">Your Email</label>
+                        <input type="email" placeholder="Your Email" id="email">
+
+                        <label for="password">Your Password</label>
+                        <input type="password" placeholder="Your Password" id="password">
+
+                        <button class="pure-button" type="submit">Sign Up</button>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
+                <h4>Contact Us</h4>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat.
+                </p>
+
+                <h4>More Information</h4>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer l-box is-center">
+        View the source of this layout to learn more. Made with love by the YUI Team.
+    </div>
+
+</div>
+
+<div style="position: absolute !important; visibility: hidden !important" id="yui3-css-stamp"></div>
+
+
+
+    <div id="main">
+        <ol>
+            <li ng-repeat="(category,value) in quiz.categories">
+                <h2>{{category}}</h2>
+
+                <p>Spørsmål:</p>
+                <ol>
+                    <li ng-repeat="question in quiz.categories[category]">
+                        <p>{{question.question}}</p>
+                        <ol type="a" ng-show="question.alternatives != null">
+                            <li ng-repeat="alternative in question.alternatives">
+                                {{alternative}}
+                            </li>
+                        </ol>
+                        <p>Fasit: {{question.answer}}</p>
+                    </li>
+                </ol>
+                <h3>Legg til flere spørsmål</h3>
+                <label for="question">Spørsmål: </label><textarea rows="5" cols="50" autocomplete="off" id="question" type="text" ng-model="question"></textarea><br />
+
+                <form ng-submit="add_alternative()"><label for="question">Alternativ: </label><input type="hidden" value="{{category}}" name="category" /><input autocomplete="off" id="alternative" type="text" ng-model="alternative" /><input type="submit" value="Legg til alternativ" /></form><br/>
+                </p>
+                <ul type="a">
+                    <li ng-repeat="alternative in alternatives[category]">{{alternative}}</li>
+                </ul>
+                <button ng-show="alternatives.length > 0" ng-click="clear_alternatives(category)">Slett alternativer</button><br /><br/>
+
+                <label for="answer">Svar: </label><input autocomplete="off" id="answer" type="text" ng-model="answer" />
+
+                <input type="submit" value="Legg til spørsmål" ng-click="add_question(category)" />
+                <br />
+                <button ng-click="add_random_question(category)">Legg til tilfeldig spørsmål i samme kategori</button>
+
+            </li>
+        </ol>
+
+
+
+</body>
+</html>
