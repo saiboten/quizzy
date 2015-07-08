@@ -3,64 +3,41 @@
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="True">
+
     <title></title>
 
     <script src="/javascripts/angular.js"></script>
     <script src="/javascripts/controllers.js"></script>
 
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
-    <!--<![endif]-->
-
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="/combo/1.18.13?/css/layouts/marketing-old-ie.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="/stylesheets/marketing.css">
-    <!--<![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/concise.min.css" />
 
 </head>
 <body ng-controller="QuizNameCtrl">
-
-<div class="header">
-    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a href="" class="pure-menu-heading">Quizzy</a>
-    </div>
-</div>
-
-<div class="content-wrapper">
-    <div class="content">
-        <h2 class="content-head is-center">Velg quiz</h2>
-
-        <div class="pure-g">
-            <div class="l-box pure-u-1">
-
-                <p>Velg quiz eller opprett en ny.</p><br />
-                <p ng-model="status"></p>
-                <form class="pure-form" ng-submit="add_quiz()">
+<div class="container">
+    <div class="row bg-light-blue">
+        <div class="column-16">
+          <h2>Velg quiz</h2>
+            <p ng-model="status"></p>
+            <form class="form" ng-submit="add_quiz()">
+                <div class="form-item">
                     <input placeholder="Skriv navn på ny quiz her" ng-model="quiz_name" type="text" />
                     <button type="submit">Opprett ny quiz</button>
-                </form>
+                </div>
+            </form>
 
-                <p ng-show="quizzes.length == 0">Du har ikke opprettet noen quizzer enda.</p>
-                <ul>
-                    <li ng-repeat="quiz in quizzes">
-                        <a href="/quizadmin/{{quiz.quiz}}">{{quiz.quiz}}</a>
-                    </li>
-                </ul>
-            </div>
+            <p ng-show="quizzes.length == 0">Du har ikke opprettet noen quizzer enda.</p>
+            <ul>
+                <li ng-repeat="quiz in quizzes">
+                    <a href="/quizadmin/{{quiz.quiz}}">{{quiz.quiz}}</a>
+                </li>
+            </ul>
 
         </div>
     </div>
 </div>
-</div>
-
-<div style="position: absolute !important; visibility: hidden !important" id="yui3-css-stamp"></div>
 
 </body>
 </html>

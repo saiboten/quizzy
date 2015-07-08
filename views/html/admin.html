@@ -3,103 +3,104 @@
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="True">
+
     <title></title>
 
     <script src="/javascripts/angular.js"></script>
     <script src="/javascripts/controllers.js"></script>
 
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
-    <!--<![endif]-->
-
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="/combo/1.18.13?/css/layouts/marketing-old-ie.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="/stylesheets/marketing.css">
-    <!--<![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/concise.min.css" />
 
 </head>
 <body ng-controller="QuestionCtrl">
 
-<div class="header">
-    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a href="" class="pure-menu-heading">Quizzy</a>
+<div class="container">
 
-        <ul class="pure-menu-list">
-            <li class="pure-menu-item pure-menu-selected"><a class="pure-menu-link" href="/quizadmin/{{quiz.quiz}}">Admin</a></li>
-            <li class="pure-menu-item"><a class="pure-menu-link" href="/quiz/{{quiz.quiz}}">Se quiz</a></li>
-        </ul>
-    </div>
-</div>
+    <div class="row bg-light-blue">
+        <div class="column-12">
+            <h2>Quizzy</h2>
 
-<div class="content-wrapper">
-    <div class="content">
-        <h2 class="content-head is-center">Quizzy</h2>
-
-        <div class="pure-g">
-            <div class="l-box pure-u-1">
-
-                <h3 class="content-subhead">
-                    <i class="fa fa-rocket"></i>
-                    Legg til flere kategorier
-                </h3>
-                <p>
-                    <form class="pure-form-stacked" ng-submit="add_category()">
-                        <input placeholder="Kategori" ng-model="category_name" type="text" />
-                        <button class="pure-button pure-button-primary" type="submit">Legg til kategori</button>
-                    </form>
-                    <p ng-model="status"></p>
-                </p>
-            </div>
-
+            <h3>Legg til flere kategorier</h3>
+            <form ng-submit="add_category()">
+                    <input placeholder="Kategori" ng-model="category_name" type="text" />
+                    <button type="submit">Legg til kategori</button>
+            </form>
+            <p ng-model="status"></p>
+        </div>
+        <div class="column-4 gutters">
+            <a href="">Quizzy</a>
+            <ul>
+                <li><a class="pure-menu-link" href="/quizadmin/{{quiz.quiz}}">Admin</a></li>
+                <li><a class="pure-menu-link" href="/quiz/{{quiz.quiz}}">Se quiz</a></li>
+            </ul>
         </div>
     </div>
 
-    <div class="ribbon l-box-lrg pure-g">
-        <div ng-repeat="(category,value) in quiz.categories" class="pure-u-1-3">
+    <div class="row bg-light-yellow">
+        <div class="column-4" ng-repeat="(category,value) in quiz.categories">
 
-            <h2 class="content-head content-head-ribbon">{{category}}</h2>
+            <h2>{{category}}</h2>
 
-                    <p>Spørsmål:</p>
-                    <ol>
-                        <li ng-repeat="question in quiz.categories[category]">
-                            <p>{{question.question}}</p>
-                            <ol type="a" ng-show="question.alternatives != null">
-                                <li ng-repeat="alternative in question.alternatives">
-                                    {{alternative}}
-                                </li>
-                            </ol>
-                            <p>Fasit: {{question.answer}}</p>
+            <p>Spørsmål:</p>
+            <ol>
+                <li ng-repeat="question in quiz.categories[category]">
+                    <p>{{question.question}}</p>
+                    <ol type="a" ng-show="question.alternatives != null">
+                        <li ng-repeat="alternative in question.alternatives">
+                            {{alternative}}
                         </li>
                     </ol>
-                    <h3>Legg til flere spørsmål</h3>
-                    <label for="question">Spørsmål: </label><textarea rows="5" cols="50" autocomplete="off" id="question" type="text" ng-model="question"></textarea><br />
+                    <p>Fasit: {{question.answer}}</p>
+                </li>
+            </ol>
+            <h3>Legg til flere spørsmål</h3>
+            <form class="form-inline" ng-submit="">
+                <div class="form-item">
+                    <label for="question">Spørsmål: </label>
+                    <textarea class="column-16" autocomplete="off" id="question" type="text" ng-model="question"></textarea>
+                </div>
+                <fieldset>
 
-                    <form class="pure-form-stacked" ng-submit="add_alternative()"><label for="question">Alternativ: </label><input type="hidden" value="{{category}}" name="category" /><input autocomplete="off" id="alternative" type="text" ng-model="alternative" /><input type="submit" value="Legg til alternativ" /></form><br/>
-                    </p>
-                    <ul type="a">
+                    <form class="form" ng-submit="add_alternative()">
+                        <div class="form-item">
+                            <label for="alternative">Alternativ: </label>
+                            <input type="hidden" value="{{category}}" name="category" />
+                            <input class="column-16" autocomplete="off" id="alternative" type="text" ng-model="alternative" />
+                            <button class="column-16" type="submit">Legg til alternativ</button>
+                        </div>
+                    </form>
+
+                    <ul ng-show="alternatives.length > 0" type="a">
                         <li ng-repeat="alternative in alternatives[category]">{{alternative}}</li>
                     </ul>
-                    <button ng-show="alternatives.length > 0" ng-click="clear_alternatives(category)">Slett alternativer</button><br /><br/>
+                    <button class="pure-button pure-button-primary" ng-show="alternatives.length > 0" ng-click="clear_alternatives(category)">Slett alternativer</button><br /><br/>
+                </fieldset>
 
-                    <label for="answer">Svar: </label><input autocomplete="off" id="answer" type="text" ng-model="answer" />
+                <div class="form-item">
+                    <label for="answer">Svar: </label>
+                    <input class="column-16" autocomplete="off" id="answer" type="text" ng-model="answer" />
+                    <button class="column-16" type="submit" ng-click="add_question(category)">Legg til spørsmål</button>
+                </div>
+                <div class="form-item">
+                    <button class="column-16" ng-click="add_random_question(category)">Legg til tilfeldig spørsmål i samme kategori</button>
+                </div>
 
-                    <input type="submit" value="Legg til spørsmål" ng-click="add_question(category)" />
-                    <br />
-                    <button ng-click="add_random_question(category)">Legg til tilfeldig spørsmål i samme kategori</button>
-
-             </div>
+            </form>
         </div>
     </div>
+
+
+
+
 </div>
 
-<div style="position: absolute !important; visibility: hidden !important" id="yui3-css-stamp"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="/js/concise.min.js"></script>
 
 </body>
 </html>
