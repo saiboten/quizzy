@@ -5,16 +5,35 @@ var db = mongojs('quizzy', ["categories","users"]);
 var quiz_service = require("./quiz_service");
 var user_service = require("./user_service");
 
-var add_question = function(category,question) {
-    console.log("Adding question, quiz: ", quiz_service.get_current_quiz_name(), ", category", category, ", question",  question);
+var guid = function() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return s4() + s4();
+}
 
-    db.users.findOne({username : user_service.get_username()}, function(err, storeduser) {
-        console.log("Quiz name: ", quiz_service.get_current_quiz_name());
+var add_question = function(req, category,question) {
+    console.log("Adding question, quiz: ", quiz_service.get_current_quiz_name(req), ", category", category, ", question",  question);
+
+    question.id = guid();
+
+    db.users.findOne({username : user_service.get_username(req)}, function(err, storeduser) {
+        console.log("Quiz name: ", quiz_service.get_current_quiz_name(req));
 
         storeduser.quiz.forEach(function(thequiz) {
-           if(quiz_service.get_current_quiz_name() === thequiz.quiz) {
+           if(quiz_service.get_current_quiz_name(req) === thequiz.id) {
                console.log("We found the right quiz. Time to add the question: ", thequiz.categories);
-               thequiz.categories[category].push(question);
+               thequiz.categories.forEach(function(elem) {
+                   console.log("elem.name", elem.name, "category", category);
+
+                   if(elem.name == category.name) {
+                        console.log("Found the correct category to add question: ", category.name);
+
+                        elem.questions.push(question);
+                    }
+               })
            }
         });
 
@@ -25,6 +44,8 @@ var add_question = function(category,question) {
             console.log("User after question save: ", user);
         });
 
+        console.log("User storing done, time to store question to question list");
+
         db.categories.findOne({category: category}, function(err, cat) {
            if(err) {
                console.log("Wups. Error");
@@ -33,13 +54,13 @@ var add_question = function(category,question) {
            if(cat == undefined) {
                console.log("This category does not exist yet. Creating category");
                cat = {};
-               cat.category = category;
+               cat.category = category.name;
                cat.questions = [];
            }
 
            cat.questions.push(question);
 
-            console.log("Storing this category: " + cat);
+            console.log("Storing this category: ", cat);
 
             db.categories.save(cat, function(err, catstored) {
                 console.log("Category storied: ", catstored);
@@ -48,17 +69,20 @@ var add_question = function(category,question) {
     });
 };
 
-var add_random_question = function(category, callback) {
-    console.log("Adding random question, quiz: ", quiz_service.get_current_quiz_name(), ", category", category);
+var add_random_question = function(req, category, callback) {
+    console.log("Adding random question, quiz: ", quiz_service.get_current_quiz_name(req), ", category", category);
 
-    db.users.findOne({username : user_service.get_username()}, function(err, storeduser) {
-        console.log("Quiz name: ", quiz_service.get_current_quiz_name());
+    db.users.findOne({username : user_service.get_username(req)}, function(err, storeduser) {
+        console.log("Quiz name: ", quiz_service.get_current_quiz_name(req));
 
         storeduser.quiz.forEach(function(thequiz) {
-            if(quiz_service.get_current_quiz_name() === thequiz.quiz) {
+            if(quiz_service.get_current_quiz_name(req) === thequiz.id) {
                 console.log("We found the right quiz. Time to add the question: ", thequiz.categories);
 
                 db.categories.findOne({category: category}, function(err, cat) {
+
+                    console.log("err", err, ", cat", cat);
+
                     if(cat && cat.questions.length > 0) {
                         console.log("Found category. And it even has questions? Let's add a random one!");
 
@@ -72,8 +96,14 @@ var add_random_question = function(category, callback) {
                         console.log("Random int: ", random_int);
                         var random_question = cat.questions[random_int];
                         console.log("Random question: ", random_question);
+                        random_question.id = guid();
 
-                        thequiz.categories[category].push(random_question);
+                        thequiz.categories.forEach(function(elem) {
+                            if(category == elem.name) {
+                                console.log("Found the right category for the question! Pushing new question to this category: ", category);
+                                elem.questions.push(random_question);
+                            }
+                        });
 
 
                         console.log("Storing user: ", storeduser);
@@ -136,16 +166,15 @@ var remove_question = function(question) {
     });
 };
 
-var get_questions = function(category,callback) {
-    console.log("Getting questions, quiz: ", quiz_service.get_current_quiz_name(), ", username: ", user_service.get_username());
-    db.users.findOne({username: user_service.get_username()},function(err,user) {
+var get_questions = function(req, category,callback) {
+    console.log("Getting questions, quiz: ", quiz_service.get_current_quiz_name(req), ", username: ", user_service.get_username(req));
+    db.users.findOne({username: user_service.get_username(req)},function(err,user) {
         console.log("Found data: ", err, user);
         callback(user[quiz][category]);
     });
 };
 
 exports.add_question = add_question;
-exports.get_questions = get_questions;
 exports.remove_question = remove_question;
 exports.question_order_up = question_order_up;
 exports.add_random_question = add_random_question;

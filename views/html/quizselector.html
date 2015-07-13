@@ -20,6 +20,7 @@
     <div class="row bg-light-blue">
         <div class="column-16">
           <h2>Velg quiz</h2>
+            <p>Ditt brukernavn er: {{username}}</p>
             <p ng-model="status"></p>
             <form class="form" ng-submit="add_quiz()">
                 <div class="form-item">
@@ -31,7 +32,7 @@
             <p ng-show="quizzes.length == 0">Du har ikke opprettet noen quizzer enda.</p>
             <ul>
                 <li ng-repeat="quiz in quizzes">
-                    <a href="/quizadmin/{{quiz.quiz}}">{{quiz.quiz}}</a>
+                    <a href="/quizadmin/{{quiz.id}}">{{quiz.quiz}}</a>
                 </li>
             </ul>
 

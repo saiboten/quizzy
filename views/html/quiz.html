@@ -13,10 +13,10 @@
 <p>Velkommen til quiz!</p>
 <p>Lagnavn: ________________ </p>
 
-    <li ng-repeat="(category,value) in quiz.categories">
-        <h2>{{category}}</h2>
+    <li ng-repeat="category in quiz.categories">
+        <h2>{{category.name}}</h2>
         <ol>
-            <li ng-repeat="question in quiz.categories[category]">
+            <li ng-repeat="question in category.questions">
                 <p>{{question.question}}</p>
                 <ol type="a" ng-show="question.alternatives != null">
                     <li ng-repeat="alternative in question.alternatives">

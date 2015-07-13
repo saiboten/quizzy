@@ -34,19 +34,19 @@
             <a href="">Quizzy</a>
             <ul>
                 <li><a class="pure-menu-link" href="/quizadmin/{{quiz.quiz}}">Admin</a></li>
-                <li><a class="pure-menu-link" href="/quiz/{{quiz.quiz}}">Se quiz</a></li>
+                <li><a class="pure-menu-link" href="/quiz/{{quiz.id}}">Se quiz</a></li>
             </ul>
         </div>
     </div>
 
     <div class="row bg-light-yellow">
-        <div class="column-4" ng-repeat="(category,value) in quiz.categories">
+        <div class="column-4" ng-repeat="category in quiz.categories">
 
-            <h2>{{category}}</h2>
+            <h2>{{category.name}}</h2>
 
             <p>Spørsmål:</p>
             <ol>
-                <li ng-repeat="question in quiz.categories[category]">
+                <li ng-repeat="question in category.questions">
                     <p>{{question.question}}</p>
                     <ol type="a" ng-show="question.alternatives != null">
                         <li ng-repeat="alternative in question.alternatives">
@@ -57,43 +57,40 @@
                 </li>
             </ol>
             <h3>Legg til flere spørsmål</h3>
-            <form class="form-inline" ng-submit="">
+            <form class="form-inline" ng-submit="add_question(category.name)">
                 <div class="form-item">
                     <label for="question">Spørsmål: </label>
                     <textarea class="column-16" autocomplete="off" id="question" type="text" ng-model="question"></textarea>
                 </div>
-                <fieldset>
 
+                <fieldset>
                     <form class="form" ng-submit="add_alternative()">
                         <div class="form-item">
                             <label for="alternative">Alternativ: </label>
                             <input type="hidden" value="{{category}}" name="category" />
                             <input class="column-16" autocomplete="off" id="alternative" type="text" ng-model="alternative" />
-                            <button class="column-16" type="submit">Legg til alternativ</button>
+                            <button type="button" ng-click="add_alternative(alternative)" class="column-16" type="submit">Legg til alternativ</button>
                         </div>
                     </form>
-
-                    <ul ng-show="alternatives.length > 0" type="a">
-                        <li ng-repeat="alternative in alternatives[category]">{{alternative}}</li>
-                    </ul>
-                    <button class="pure-button pure-button-primary" ng-show="alternatives.length > 0" ng-click="clear_alternatives(category)">Slett alternativer</button><br /><br/>
                 </fieldset>
+
+                <ul ng-show="alternatives[category.name].length > 0" type="a">
+                    <li ng-repeat="alternative in alternatives[category.name]">{{alternative}}</li>
+                </ul>
+                <button class="pure-button pure-button-primary" ng-show="alternatives.length > 0" ng-click="clear_alternatives(category.name)">Slett alternativer</button><br /><br/>
 
                 <div class="form-item">
                     <label for="answer">Svar: </label>
                     <input class="column-16" autocomplete="off" id="answer" type="text" ng-model="answer" />
-                    <button class="column-16" type="submit" ng-click="add_question(category)">Legg til spørsmål</button>
+                    <button class="column-16" type="submit" ng-click="add_question(category.name)">Legg til spørsmål</button>
                 </div>
                 <div class="form-item">
-                    <button class="column-16" ng-click="add_random_question(category)">Legg til tilfeldig spørsmål i samme kategori</button>
+                    <button class="column-16" ng-click="add_random_question(category.name)">Legg til tilfeldig spørsmål i samme kategori</button>
                 </div>
 
             </form>
         </div>
     </div>
-
-
-
 
 </div>
 
