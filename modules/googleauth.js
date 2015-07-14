@@ -6,8 +6,16 @@ var google = require('googleapis');
 var plus = google.plus('v1');
 var OAuth2 = google.auth.OAuth2;
 var user_service = require('./user_service');
+var properties = require ("properties");
 
-var oauth2Client = new OAuth2('1042604314842-cv14s6t4lva28tjm3f66499fm59s3sbp.apps.googleusercontent.com', 'IINI9r9-nKIW3ulkuxg6FOAF', 'http://localhost:3001/oauth2callback');
+var oauth2Client = undefined;
+
+properties.parse ("properties/googleapi.properties", { path: true }, function (error, obj){
+    if (error) {
+        return console.error (error);
+    }
+    oauth2Client = new OAuth2(obj.clientid, obj.privatekey, 'http://localhost:3001/oauth2callback');
+});
 
 // generate a url that asks permissions for Google+ and Google Calendar scopes
 var scopes = [

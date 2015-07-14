@@ -21,19 +21,18 @@
 
     <div class="row bg-light-blue">
         <div class="column-12">
-            <h2>Quizzy</h2>
+            <h2>{{quiz.quiz}}</h2>
 
             <h3>Legg til flere kategorier</h3>
             <form ng-submit="add_category()">
                     <input placeholder="Kategori" ng-model="category_name" type="text" />
                     <button type="submit">Legg til kategori</button>
             </form>
-            <p ng-model="status"></p>
+            <p>{{status}}</p>
         </div>
         <div class="column-4 gutters">
-            <a href="">Quizzy</a>
             <ul>
-                <li><a class="pure-menu-link" href="/quizadmin/{{quiz.quiz}}">Admin</a></li>
+                <li><a class="pure-menu-link" href="/quizadmin/{{quiz.id}}">Admin</a></li>
                 <li><a class="pure-menu-link" href="/quiz/{{quiz.id}}">Se quiz</a></li>
             </ul>
         </div>
@@ -42,7 +41,7 @@
     <div class="row bg-light-yellow">
         <div class="column-4" ng-repeat="category in quiz.categories">
 
-            <h2>{{category.name}}</h2>
+            <h2>{{category.name | capitalize}}</h2>
 
             <p>Spørsmål:</p>
             <ol>
@@ -54,6 +53,7 @@
                         </li>
                     </ol>
                     <p>Fasit: {{question.answer}}</p>
+                    <button ng-click="delete_question(category.name, question)">Slett spørsmål</button>
                 </li>
             </ol>
             <h3>Legg til flere spørsmål</h3>

@@ -3,6 +3,7 @@ var mongojs = require("mongojs");
 
 var db = mongojs('quizzy', ["categories","users"]);
 var quiz_service = require("./quiz_service");
+var category_service = require("./category_service");
 var user_service = require("./user_service");
 
 var guid = function() {
@@ -158,6 +159,33 @@ var question_order_up = function(question) {
 */
 };
 
+var delete_question = function(req, category_name, question_id, callback) {
+    console.log("Deleting question: ", question_id);
+    category_service.get_category(req, category_name, function(category) {
+        console.log("Returned category: ", category);
+        if(category) {
+            console.log("Question length: ", category.questions.length);
+            for(var i = 0; i < category.questions.length; i++) {
+                var question = category.questions[i];
+                console.log("Question: ", question);
+                if (question.id = question_id) {
+                    console.log("Found question to delete, it is: ", question);
+                    category.questions.splice(i,1);
+                    category_service.replace_category(req, category,function(success) {
+                        console.log("Category replaced success? ", success);
+                       callback(success);
+                    });
+                }
+            }
+        }
+        else {
+            callback(false);
+        }
+
+
+    });
+};
+
 var remove_question = function(question) {
     console.log("Removing question: " + question);
 
@@ -178,3 +206,4 @@ exports.add_question = add_question;
 exports.remove_question = remove_question;
 exports.question_order_up = question_order_up;
 exports.add_random_question = add_random_question;
+exports.delete_question = delete_question;

@@ -40,8 +40,8 @@ router.get('/questionshidden', function(req, res, next) {
 
 router.post('/add_quiz', function(req, res, next) {
     console.log("Adding quiz, quiz name: ", req.body.quiz_name);
-    quiz_service.add_quiz(req, req.body.quiz_name, function(success, error_message) {
-        res.json({success: success, error: error_message});
+    quiz_service.add_quiz(req, req.body.quiz_name, function(success, error_message, quizid) {
+        res.json({success: success, error: error_message, id: quizid });
     });
 });
 
@@ -55,8 +55,10 @@ router.post('/add_random_question', function(req, res, next) {
 
 router.post('/add_category', function(req, res, next) {
     console.log("Adding category: ", req.body.category_name);
-    category_service.add_category(req, req.body.category_name);
-    res.json({success: true});
+    category_service.add_category(req, req.body.category_name, function(success, error) {
+        res.json({success: success, error: error});
+    });
+
 });
 
 router.get('/categories.json', function(req, res, next) {
@@ -83,6 +85,16 @@ router.post('/set_username', function(req, res, next) {
     user_service.set_username(req, req.body.username);
     res.json({success: true});
 });
+
+router.post('/delete_question', function(req, res, next) {
+    console.log("Deleting question, category: ", req.body.category, ", question: ", req.body.question);
+    question_service.delete_question(req, req.body.category, req.body.question.id, function(success) {
+        res.json({success: success});
+    });
+
+});
+
+
 
 router.get('/quiz.json', function(req, res, next) {
     quiz_service.get_current_quiz(req, function(questions) {

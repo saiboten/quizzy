@@ -1,5 +1,13 @@
 var quizApp = angular.module('quizApp', []);
 
+quizApp.filter('capitalize', function() {
+    return function (input, all) {
+        return (!!input) ? input.replace(/([^\W_]+[^\s-]*) */g, function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }) : '';
+    };
+});
+
 quizApp.controller('UsernameCtrl', function($scope, $http) {
 
     $scope.google_auth = function() {
@@ -39,8 +47,7 @@ quizApp.controller('QuizNameCtrl', function($scope, $http) {
         console.log("Adding new quiz. ", this.quiz_name);
         $http.post('/add_quiz', {quiz_name: this.quiz_name}).success(function(data) {
             if(data) {
-                $scope.status = "Quiz added successfully";
-                $scope.get_quizzes();
+                window.location = '/quizadmin/' + data.id;
             }
             else {
                 $scope.status = data.error_message;
@@ -69,9 +76,14 @@ quizApp.controller('QuestionCtrl', function ($scope, $http) {
     $scope.add_category = function() {
         console.log("Adding new category. ", this.category_name);
         $http.post('/add_category', {category_name: this.category_name}).success(function(data) {
-            $scope.status = "Category added";
-            $scope.get_categories();
-            $scope.update_questions();
+            if(data.success) {
+                $scope.status = "Kategori lagt til.";
+                $scope.get_categories();
+                $scope.update_questions();
+            }
+            else {
+                $scope.status = data.error;
+            }
         });
     };
 
@@ -84,6 +96,21 @@ quizApp.controller('QuestionCtrl', function ($scope, $http) {
             }
             else {
                 $scope.status = "Fant ingen spørsmål å legge til i denne kategorien.";
+            }
+            $scope.update_questions();
+
+        });
+    };
+
+    $scope.delete_question = function(category,question) {
+      console.log("Deleting question: ", question);
+        $http.post('/delete_question', {question: question, category: category}).success(function(data) {
+            console.log("Updating questions");
+            if(data) {
+                $scope.status = "Spørsmål slettet";
+            }
+            else {
+                $scope.status = "Spørsmål kunne ikke slettes";
             }
             $scope.update_questions();
 

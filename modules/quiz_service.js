@@ -10,7 +10,7 @@ var guid = function() {
             .substring(1);
     }
     return s4() + s4();
-}
+};
 
 var get_current_quiz_name = function(req) {
     return req.session.quizid;
@@ -40,14 +40,17 @@ var add_quiz = function(req, quiz, callback) {
             console.log("Quiz already exists");
             callback(false, "Quiz already exists");
         }
+        else {
+            console.log("Quiz does not exist");
+            var quidid = guid();
+            storeduser.quiz.push({id: quidid, quiz:quiz, categories: []});
 
-        storeduser.quiz.push({id: guid(), quiz:quiz, categories: []});
-
-        db.users.save(storeduser, function(err, user_updated) {
-            console.log("err: ", err);
-            console.log("Quiz created, user after quiz created: ", user_updated);
-            callback(true, "");
-        });
+            db.users.save(storeduser, function(err, user_updated) {
+                console.log("err: ", err);
+                console.log("Quiz created, user after quiz created: ", user_updated);
+                callback(true, "", quidid);
+            });
+        }
     });
 };
 
